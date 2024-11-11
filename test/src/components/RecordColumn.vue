@@ -1,4 +1,5 @@
 <template>
+    <!--pj:这里的 zhong 命名太中文化了-->
   <div class="zhong">
         <div class="navigationbar">
             <div class="contet">
@@ -14,6 +15,7 @@
                     <span>所有练习记录</span>
                     <i class="el-icon-edit"></i>
                 </router-link>
+                <!--pj:这里放 reouter-view 是做啥？-->
                 <router-view></router-view>
                 </div>
                 <div class="content">

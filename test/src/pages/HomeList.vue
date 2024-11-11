@@ -22,6 +22,7 @@ export default {
   components: { HeaderBox, RecordColumn, TrainList },
 
 data() {
+    // pj: 下一步，再用axios 接口来实现数据的获取有，接口可以自己想办法搜一下可以定义数据的api
     return {
         username:'罗峰',
         practicetimes:1,

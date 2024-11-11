@@ -38,6 +38,9 @@ props:['username']
         background-image: linear-gradient(90deg, #e270ff, #5c67ff);
 
         .pic {
+            /**
+            pj：用相对，绝对定位会影响性能，这里用普通布局也可以实现的吧？
+            */
             position: absolute;
             top: (3.9/@baseSize);
             left: (3.9/@baseSize);

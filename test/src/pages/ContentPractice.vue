@@ -30,6 +30,7 @@
             </div>
         </div>
     </div>
+    <!--pj：这里跟主页的那个分数栏功能 UI 有像点，做成单一组件，好复用-->
     <div class="four">
         <div class="get">
             <div class="tag">练习记录</div>

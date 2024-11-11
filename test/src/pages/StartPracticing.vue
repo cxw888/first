@@ -2,6 +2,7 @@
   <div>
     <div class="header">
         <div class="title">
+            
             <div class="tagmb-s">
                 任务场景
             </div>
@@ -27,6 +28,7 @@
             </div>
         </div>
     </div>
+    <!--pj：下一步把录音及录音完成后在对话列表中显示录音内容及点播可播放自己的录音实现一下（不需要录音转文本，内需要展示录音和点击可播放，这个不需要接口的，纯前端可实现）-->
    <div class="bottom"><i class="el-icon-microphone"></i>点击开始录音</div> 
     <div class="nova-btn" @click="hint"> <div><i class="el-icon-sunny"></i> 话术提示</div></div>
     <div class="tips-dialog" :style="divStyle">
@@ -60,9 +62,11 @@ data() {
 },
 methods: {
     hint(){
+        // pj:用了 vue 之后，一切都需要使用 vue 这种数据驱动模式，不要直接操作 dom，切记切记
         this.divStyle.display = this.divStyle.display === 'block' ? 'none' : 'block';
     },
     deletetips(){
+        // pj:用了 vue 之后，一切都需要使用 vue 这种数据驱动模式，不要直接操作 dom，切记切记
         this.divStyle.display='none'
     },
     stop(){
@@ -94,6 +98,9 @@ methods: {
     box-sizing: border-box;
 }
 
+/**
+pj:body样式好像也是每个页一样的？如果是有一样的，需要做成通用样式，不要每个页面写一次
+*/
 body {
     width: 100%;
     height: 100%;
@@ -107,6 +114,9 @@ body {
     padding-bottom: env(safe-area-inset-bottom);
     font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
+/**
+pj: 按钮前一个页也有用到，做成通用样式
+*/
 .bottom {
     text-decoration: none;
     margin: 0 (10/@baseSize);
@@ -155,6 +165,9 @@ body {
         justify-content: space-between;
         height: (28/@baseSize);
 
+        /***
+        pj:这个 tag 有很多地方用，建议样式做成通用的样式-
+        */
         .tagmb-s {
             width: (56/@baseSize);
             height: (20/@baseSize);
