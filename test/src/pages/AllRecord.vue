@@ -31,26 +31,12 @@
 import {mapState} from 'vuex'
 export default {
 name:'AllRecord',
-// data() {
-//     return {
-//         practice:[
-//             { id:'001',theme:'医药：感冒药药品推介',times:'2024-10-13 14:57',names:'王女士'},
-//             { id:'002',theme:'医药：图书推介',times:'2024-10-12 14:57',names:'刘女士'},
-//             { id:'003',theme:'医药：运动推介',times:'2024-10-12 14:57',names:'陈女士'},
-//             { id:'003',theme:'医药：运动推介',times:'2024-10-12 14:57',names:'李女士'},
-//         ]
-//     }
-// },
 computed:{
-    // num(){
-    //     return this.practice.length
-    // }
 ...mapState(['practice'])
 
 },
 methods: {
   still(item){
-    // 可以往后退
     this.$router.push({
     path:'/startpracticing',
       query:{
@@ -62,23 +48,7 @@ methods: {
 }}
 </script>
 <style lang="css" scoped >
-  * {
-  box-sizing: border-box;
-}
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  padding: 0;
-  background-image: url(../assets/train-bg.78d6d843.jpg);
-  background-size: cover;
-  color: #666;
-  -webkit-text-size-adjust: 100%;
-  font-size: 3.58974359vw;
-  padding-bottom: env(safe-area-inset-bottom);
-  font-family: "Helvetica Neue", Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-}
-
+  
 .block-title {
   padding: 5.64102564vw 2.56410256vw 0 5.12820513vw;
   height: 11.79487179vw;

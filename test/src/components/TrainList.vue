@@ -2,8 +2,8 @@
   <div class="section" @click="scene(item)">
         <img src="../assets/cover.aa799c19.png" alt="">
         <div class="texts">
-            <h3>{{item.theme}}</h3>
-            <p>{{item.content}}</p>
+            <h3>{{item.name}}</h3>
+            <p>{{item.email}}</p>
         </div>
 
     </div>
@@ -19,12 +19,12 @@ props:['item'],
     path:'/contentpractice',
       query:{
         id:item.id,
-        theme:item.theme,
-        content:item.content,
-        names:item.names,
-        gender:item.gender,
-        personnality:item.personnality,
-        own:item.own
+        theme:item.name,
+        content:item.email,
+        names:item.phone,
+        gender:item.website,
+        personnality:item.email,
+        own:item.username
       }
 })
 }
@@ -32,35 +32,28 @@ props:['item'],
 }
 </script>
 
-<style lang="less" scoped>
-  @baseSize: 3.9vw;
-
-    .section {
-    margin: (15/@baseSize)(10/@baseSize) 0;
-    background-color: rgba(2, 4, 10, .70196);
-    display: flex;
-    font-size: (15/@baseSize);
-    border-radius: (10/@baseSize);
-    padding: (18/@baseSize) (15/@baseSize)(15/@baseSize);
-    justify-content: space-between;
-    text-decoration: none;
-    color: #666;
-
-
-    img {
-        width: (100/@baseSize);
-        height: (100/@baseSize);
-    }
-
-    .texts {
-        margin-left: (9.7/@baseSize);
-
-        h3 {
-            font-size: (15.6/@baseSize);
-            color: white;
-            margin: 0;
-        }
-    }
-
+<style lang="css" scoped>
+ .section {
+  margin: 3.84615385vw 2.56410256vw 0;
+  background-color: rgba(2, 4, 10, 0.70196);
+  display: flex;
+  font-size: 3.84615385vw;
+  border-radius: 2.56410256vw;
+  padding: 4.61538462vw 3.84615385vw 3.84615385vw;
+  justify-content: space-between;
+  text-decoration: none;
+  color: #666;
+}
+.section img {
+  width: 25.64102564vw;
+  height: 25.64102564vw;
+}
+.section .texts {
+  margin-left: 2.48717949vw;
+}
+.section .texts h3 {
+  font-size: 4vw;
+  color: white;
+  margin: 0;
 }
 </style>

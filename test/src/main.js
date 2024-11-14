@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 // 使用ui
+
 import VueRouter from 'vue-router'
 import router from './router'
 
 import store from './store'
 
+// 引入通用样式
+import './assets/global.css';
 // 完整引入ui库
 import ElementUI from 'element-ui';
 // 引入ui全部样式

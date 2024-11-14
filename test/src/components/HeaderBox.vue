@@ -13,45 +13,34 @@ name:'HeaderBox',
 props:['username']
 }
 </script>
-<style lang="less" scoped>
-  @baseSize: 3.9vw;
-    .top {
-    margin: 0 (10/@baseSize);
-    display: flex;
-    justify-content: flex-start;
-    height: (114/@baseSize);
-    padding: (21/@baseSize) (15/@baseSize) (21/@baseSize) (21/@baseSize);
-
-    .names {
-        line-height: (72/@baseSize);
-        text-indent: 1em;
-        color: white;
-        font-weight: 600;
-        font-size: (20/@baseSize);
-    }
-
-    .header {
-        width: (72/@baseSize);
-        height: (72/@baseSize);
-        border-radius: 50%;
-        position: relative;
-        background-image: linear-gradient(90deg, #e270ff, #5c67ff);
-
-        .pic {
-            /**
-            pj：用相对，绝对定位会影响性能，这里用普通布局也可以实现的吧？
-            */
-            position: absolute;
-            top: (3.9/@baseSize);
-            left: (3.9/@baseSize);
-            width: (64/@baseSize);
-            height: (64/@baseSize);
-            border-radius: 50%;
-            background-image: url(../assets/avatar-default.png);
-            background-size: cover;
-
-        }
-    }
+<style lang="css" scoped>
+  .top {
+  margin: 0 2.56410256vw;
+  display: flex;
+  justify-content: flex-start;
+  height: 29.23076923vw;
+  padding: 5.38461538vw 3.84615385vw 5.38461538vw 5.38461538vw;
+}
+.top .names {
+  line-height: 18.46153846vw;
+  text-indent: 1em;
+  color: white;
+  font-weight: 600;
+  font-size: 5.12820513vw;
+}
+.top .header {
+  width: 18.46153846vw;
+  height: 18.46153846vw;
+  border-radius: 50%;
+  background-image: linear-gradient(90deg, #e270ff, #5c67ff);
+}
+.top .header .pic {
+  margin: 1vw;
+  width: 16.41025641vw;
+  height: 16.41025641vw;
+  border-radius: 50%;
+  background-image: url(../assets/avatar-default.png);
+  background-size: cover;
 }
 
 </style>

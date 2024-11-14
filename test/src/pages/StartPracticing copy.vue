@@ -19,10 +19,9 @@
             <div class="name">
                 {{names}}
             </div>
-            <div v-if="audioUrl" class="content-audio-wrapper">
-              <img src="../assets/wifi-blue.7f24edee.gif" alt="">
-              <audio :src="audioUrl" controls></audio>
-                <span>4</span>
+            <div class="content-audio-wrapper">
+                <img src="../assets/wifi-blue.7f24edee.gif" alt="">
+                <span>4"</span>
             </div>
             <div class="content-text">
                 你们保险公司又想坑我钱？我已经买过保险了！
@@ -30,7 +29,7 @@
         </div>
     </div>
     <!--pj：下一步把录音及录音完成后在对话列表中显示录音内容及点播可播放自己的录音实现一下（不需要录音转文本，内需要展示录音和点击可播放，这个不需要接口的，纯前端可实现）-->
-   <div class="bottom" @click="startRecording"  v-show="began" :disabled="Recording" ><i class="el-icon-microphone"></i>点击开始录音</div> 
+   <div class="bottom" @click="begins"  v-show="began" ><i class="el-icon-microphone"></i>点击开始录音</div> 
     <div class="nova-btn" @click="hint" v-show="!isRecording"> <div><i class="el-icon-sunny"></i> 话术提示</div></div>
     <div class="tips-dialog" v-show="isRecording">
       <div class="headericon">
@@ -46,10 +45,10 @@
     <div class="recording" v-show="!began">
           <img src="../assets/audioing-peding.93561376.png" alt="">
           <el-button type="text" class="close" @click="afters">关闭</el-button>
-         <div data-v-f7bd0078 class="time" v-if="elapsedTime>=0">录音中 {{ formattedTime }}</div>
+         <div data-v-f7bd0078 class="time">录音中</div>
          <div class="twobutton">
           <el-button round>重录</el-button>
-          <el-button round @click="stopRecording" :disabled="!Recording">发送</el-button>
+          <el-button round>发送</el-button>
         </div>
      </div>
 </div>
@@ -65,22 +64,16 @@ data() {
     return {
         isRecording:false,
         began:true,
-        Recording:false,
+
+
         mediaRecorder: null,
       audioChunks: [],
       audioUrl: null,
-
-      startTime: null,
-      elapsedTime: 0,
-      timerInterval: null,
+      recordingStartTime: null,
+      recordingDuration: 0,
     }
 },
 computed:{
-  formattedTime() {
-      const minutes = Math.floor(this.elapsedTime / 60);
-      const seconds = this.elapsedTime % 60;
-      return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    },
 },
 methods: {
     hint(){
@@ -89,53 +82,12 @@ methods: {
     deletetips(){
         this.isRecording=false
     },
-    stopRecording() {
-      if (this.mediaRecorder) {
-        this.mediaRecorder.stop();
-      }
-      clearInterval(this.timerInterval);
-      this.timerInterval = null;
-      this.elapsedTime = 0; 
-    },
-    beforeDestroy() {
-      this.stopRecording();
-    },
-    async startRecording() {
+    async begins(){
       this.began=false
-      if (this.Recording) return;
- 
-      this.Recording = true;
-      this.audioChunks = []; 
- 
-      navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => {
-          this.mediaRecorder = new MediaRecorder(stream);
- 
-          this.mediaRecorder.ondataavailable = event => {
-            this.audioChunks.push(event.data);
-          };
- 
-          this.mediaRecorder.onstop = () => {
-            const audioBlob = new Blob(this.audioChunks, { type: 'audio/webm' });
-            this.audioUrl = URL.createObjectURL(audioBlob);
-            this.audioChunks = [];
-            this.isRecordingActive = false;
-          };
- 
-          this.startTime = new Date().getTime();
-          this.timerInterval = setInterval(() => {
-            this.elapsedTime = Math.floor((new Date().getTime() - this.startTime) / 1000);
-          }, 1000);
- 
-          this.mediaRecorder.start();
-        })
-       .catch(error => {
-          console.error('错', error);
-          this.isRecordingActive = false;
-        });
     },
     afters(){
       this.began=true
+      
     },
     stop(){
         this.$confirm('您将结束本次场景任务对话，并前往AI智能分析您的对话效果，看看本次对话的得分如何吧 ', '结束本次任务并前往评估', {
@@ -155,7 +107,8 @@ methods: {
           });
         });
       }
-    }
+    
+},
 }
 </script>
 <style lang="css" scoped>
