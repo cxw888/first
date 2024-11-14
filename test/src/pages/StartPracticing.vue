@@ -13,23 +13,21 @@
         
         <div class="single-line">{{theme}}</div>
     </div>
-    <div class="chat-list">
-        <div class="pc"></div>
+    <div class="chat-list" v-for="(item, index) in messages" :key="index" >
         <div class="content">
             <div class="name">
                 {{names}}
             </div>
-            <div v-if="audioUrl" class="content-audio-wrapper">
+            <div class="content-audio-wrapper">
               <img src="../assets/wifi-blue.7f24edee.gif" alt="">
-              <audio :src="audioUrl" controls></audio>
-                <span>4</span>
+              <audio :src="item.audioUrl" controls></audio>
+                <span>{{ item.timestamp }}</span>
             </div>
-            <div class="content-text">
-                你们保险公司又想坑我钱？我已经买过保险了！
-            </div>
+            <div class="content-text">你好</div>
         </div>
+      <div class="pc"></div>
+
     </div>
-    <!--pj：下一步把录音及录音完成后在对话列表中显示录音内容及点播可播放自己的录音实现一下（不需要录音转文本，内需要展示录音和点击可播放，这个不需要接口的，纯前端可实现）-->
    <div class="bottom" @click="startRecording"  v-show="began" :disabled="Recording" ><i class="el-icon-microphone"></i>点击开始录音</div> 
     <div class="nova-btn" @click="hint" v-show="!isRecording"> <div><i class="el-icon-sunny"></i> 话术提示</div></div>
     <div class="tips-dialog" v-show="isRecording">
@@ -69,7 +67,7 @@ data() {
         mediaRecorder: null,
       audioChunks: [],
       audioUrl: null,
-
+      messages: [],
       startTime: null,
       elapsedTime: 0,
       timerInterval: null,
@@ -104,7 +102,6 @@ methods: {
     },
     async startRecording() {
       this.began=false
-      if (this.Recording) return;
  
       this.Recording = true;
       this.audioChunks = []; 
@@ -116,24 +113,26 @@ methods: {
           this.mediaRecorder.ondataavailable = event => {
             this.audioChunks.push(event.data);
           };
- 
+     //  当停止时
           this.mediaRecorder.onstop = () => {
+            const stopTime = new Date().getTime();
+            const elapsedSeconds = Math.floor((stopTime - this.startTime) / 1000);
+            const elapsedTimeFormatted = `${Math.floor(elapsedSeconds / 60).toString().padStart(2, '0')}:${(elapsedSeconds % 60).toString().padStart(2, '0')}`;
             const audioBlob = new Blob(this.audioChunks, { type: 'audio/webm' });
             this.audioUrl = URL.createObjectURL(audioBlob);
             this.audioChunks = [];
-            this.isRecordingActive = false;
+          this.messages.push({ timestamp:elapsedTimeFormatted,audioUrl:this.audioUrl });
+
           };
- 
+          // 开始时间 定义点击开始的时间
           this.startTime = new Date().getTime();
           this.timerInterval = setInterval(() => {
             this.elapsedTime = Math.floor((new Date().getTime() - this.startTime) / 1000);
           }, 1000);
- 
           this.mediaRecorder.start();
         })
        .catch(error => {
           console.error('错', error);
-          this.isRecordingActive = false;
         });
     },
     afters(){
@@ -215,10 +214,10 @@ methods: {
   height: 7.17948718vw;
 }
 .chat-list {
-  margin: 3.84615385vw 2.56410256vw;
-  height: 33.33333333vw;
+  height: 32.33333333vw;
   display: flex;
-  gap: 2.56410256vw;
+justify-content: flex-end;
+gap: 2vw;
 }
 .chat-list .pc {
   width: 9.23076923vw;
@@ -228,12 +227,7 @@ methods: {
   border-radius: 51.28205128vw;
   background-size: 100% 100%;
 }
-.chat-list .content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+
 .chat-list .content .name {
   font-size: 2.82051282vw;
   color: #fff;
@@ -242,10 +236,11 @@ methods: {
   padding: 1.28205128vw;
   height: 9.23076923vw;
   width: 23.07692308vw;
-  border-radius: 0 3.07692308vw 3.07692308vw 3.07692308vw;
+  border-radius: 3.07692308vw  0 3.07692308vw 3.07692308vw;
   background: white;
   display: flex;
-  gap: 1.28205128vw;
+  gap: 0.5vw;
+  margin-top: 1vw;
   align-items: center;
 }
 .chat-list .content .content-audio-wrapper img {
@@ -253,7 +248,8 @@ methods: {
   height: 5.12820513vw;
 }
 .chat-list .content .content-text {
-  height: 17.43589744vw;
+  height: 10.43589744vw;
+  margin-top: 2vw;
   background: rgba(235, 236, 255, 0.94902);
   border-radius: 3.07692308vw;
   font-size: 4.1025641vw;
