@@ -96,6 +96,8 @@ methods: {
       clearInterval(this.timerInterval);
       this.timerInterval = null;
       this.elapsedTime = 0; 
+
+      this.began=true
     },
     beforeDestroy() {
       this.stopRecording();
