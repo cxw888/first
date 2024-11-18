@@ -1,7 +1,20 @@
 <template>
     <div>
     <HeaderBox :username="totaldata.title"></HeaderBox>
-    <RecordColumn :practicetimes="totaldata.userId" :scenariocount="totaldata.id" :totaltime="totaldata.id"></RecordColumn>
+    <RecordColumn :datas="totaldata" customClass="gradient-background" >
+    <template slot="center">
+     <div class="tge">
+    <div class="leftt">
+      <i class="el-icon-s-fold"></i>
+      <span>成长记录</span>
+    </div>
+  <router-link class="rightt" to="/allrecord">
+    <span>所有练习记录</span>
+    <i class="el-icon-edit"></i>
+  </router-link>
+</div>
+</template>
+    </RecordColumn>
     <div class="title">
         选择陪练场景
     </div>
@@ -45,7 +58,7 @@ data() {
     },
     async totaldatas() {
       try {
-        const response = await axios.get('http://jsonplaceholder.typicode.com/albums/1');
+        const response = await axios.get('http://jsonplaceholder.typicode.com/comments?postId=1');
         this.totaldata = response.data; 
       } catch (err) {
         this.error = 'Failed to fetch data'; 
@@ -57,7 +70,11 @@ data() {
 }
 </script>
 
-<style lang="css">
+<style lang="css" >
+.gradient-background{
+  background: linear-gradient(48deg, #e270ff 0%, #5b66ff 44%, #10de8b 92%);
+
+}
  .bottoms{
     margin-top: 5vw;
   text-align: center;

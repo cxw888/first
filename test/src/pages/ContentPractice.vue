@@ -30,20 +30,46 @@
             </div>
         </div>
     </div>
-    <RankingRecords></RankingRecords>
+    <RecordColumn :datas="ranking">
+      <template slot="center">
+        <div class="get">
+            <div class="tag">练习记录</div>
+            <i class="el-icon-arrow-righ"></i>
+        </div>
+      </template>
+    </RecordColumn>
    <div class="bottom" @click="ask(theme,names)"><i class="el-icon-microphone"></i>点击开始练习</div> 
   </div>
 </template>
 
 <script>
 import { nanoid } from 'nanoid';
-import RankingRecords from '@/components/RankingRecords.vue';
+import RecordColumn from '@/components/RecordColumn.vue';
+import axios from 'axios';
 
 export default {
-  components: { RankingRecords },
+  components: { RecordColumn },
     name:'ContentPractice',
     props:['id','theme','content','names','gender','personnality','own'] ,
+    data() {
+      return {
+        ranking:[]
+      }
+    },
+  created() {
+    this.rankings();
+  },
     methods: {
+      async rankings() {
+      try {
+        const response = await axios.get('http://jsonplaceholder.typicode.com/comments?postId=4');
+        this.ranking = response.data; 
+      } catch (err) {
+        this.error = 'Failed to fetch data'; 
+      } finally {
+        this.loading = false; 
+      }
+    },
         ask(theme,names){
             this.$router.push({
             path:'/startpracticing',
@@ -58,9 +84,13 @@ export default {
     
 }
 </script>
-<style lang="css" scoped>
- 
+<style lang="css" scoped >
 
+ .get {
+  display: flex;
+  height: 8vw;
+  justify-content: space-between;
+}
 .top {
   background-color: rgba(0, 0, 0, 0.6);
   margin: 2.56410256vw;

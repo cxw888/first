@@ -1,33 +1,17 @@
 <template>
   <div class="practice-summary">
-        <div class="navigationbar">
+        <div :class="['navigationbar', navigationBarClass]">
             <div class="contet">
-                <div class="tge">
-
-                    <div class="leftt">
-                        <i class="el-icon-s-fold"></i>
-                        <span>成长记录</span>
-                    </div>
-
-                <router-link class="rightt" to="/allrecord">
-                    <span>所有练习记录</span>
-                    <i class="el-icon-edit"></i>
-                </router-link>
+                <slot name="center"></slot>
+                 <div class="content">
+                  
+                  <div class="item" v-for="item in datas" :key="item.postId">
+                    <div class="number">{{item.id}}</div>
+                        <div class="text">{{item.email }}</div>
+                      </div>
+                   
                 </div>
-                <div class="content">
-                    <div class="item">
-                        <div class="number">{{practicetimes}}</div>
-                        <div class="text">练习次数</div>
-                    </div>
-                    <div class="item">
-                        <div class="number">{{scenariocount}}</div>
-                        <div class="text">练习场景数</div>
-                    </div>
-                    <div class="item">
-                        <div class="number">{{totaltime}}分钟</div>
-                        <div class="text">总练习时间</div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -35,10 +19,15 @@
 
 <script>
 export default {
-props:['practicetimes','scenariocount','totaltime']
+props:['datas','customClass'],
+  computed: {
+    navigationBarClass() {
+      return this.customClass;
+    }
+  }
 }
 </script>
-<style lang="css" scoped>
+<style lang="css" >
   .practice-summary {
   margin-right: 2.56410256vw;
   margin-left: 2.56410256vw;
@@ -48,11 +37,12 @@ props:['practicetimes','scenariocount','totaltime']
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  background: linear-gradient(48deg, #e270ff 0%, #5b66ff 44%, #10de8b 92%);
+  /* background: linear-gradient(48deg, #e270ff 0%, #5b66ff 44%, #10de8b 92%); */
   border-radius: 2.56410256vw;
   padding: 0.5vw;
 }
 .practice-summary .navigationbar .contet {
+  padding: 2vw 1vw 2vw 1vw;
   height: 29vw;
   background-color: #0d0f24;
   border-radius: 2.56410256vw;
@@ -60,7 +50,7 @@ props:['practicetimes','scenariocount','totaltime']
 .practice-summary .navigationbar .contet .tge {
   margin: 0 2.56410256vw 0;
   display: flex;
-  height: 10.25641026vw;
+  height: 8.25641026vw;
   justify-content: space-between;
 }
 .practice-summary .navigationbar .contet .tge .leftt {
@@ -78,10 +68,11 @@ props:['practicetimes','scenariocount','totaltime']
 .practice-summary .navigationbar .contet .content {
   margin: 2.56410256vw;
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-between; */
 }
 .practice-summary .navigationbar .contet .content .item {
-  width: 21.66666667vw;
+  width: 17.66666667vw;
+  margin: 0;
   height: 12.82051282vw;
   text-align: center;
   position: relative;
@@ -111,7 +102,7 @@ props:['practicetimes','scenariocount','totaltime']
   font-size: 5.12820513vw;
 }
 .practice-summary .navigationbar .contet .content .item .text {
-  font-size: 3.33333333vw;
+  font-size: 1.63333333vw;
 }
 
 </style>
