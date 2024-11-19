@@ -43,6 +43,9 @@
 </template>
 
 <script>
+/**
+ * pj：这里从列表页进到详情页的传参设计不对，一两句讲不清，下次面授课讲
+ */
 import { nanoid } from 'nanoid';
 import RecordColumn from '@/components/RecordColumn.vue';
 import axios from 'axios';

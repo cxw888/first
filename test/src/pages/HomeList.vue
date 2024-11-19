@@ -14,6 +14,7 @@
   </router-link>
 </div>
 </template>
+<!--html格式混乱，需要学习一下eslint相关知识，目标在项目中用上eslint，即在编辑器里有提示代码格式化入口，并且点击可以自动格化式-->
     </RecordColumn>
     <div class="title">
         选择陪练场景

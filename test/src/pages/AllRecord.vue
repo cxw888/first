@@ -12,6 +12,7 @@
             </div>
             <div class="meta">
                 <div class="itemtime">
+                  <!--PJ:提一个需求，如果这里只希望展示到日期，不显示小时分种，要怎么实现，想下方向，1小时，找不到合适方向问我-->
                     <div>练习时间:{{ item.times }}</div>
                     <div class="time"></div>
                 </div>
