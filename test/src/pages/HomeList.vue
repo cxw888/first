@@ -1,6 +1,6 @@
 <template>
     <div>
-    <HeaderBox :username="totaldata.title"></HeaderBox>
+    <HeaderBox></HeaderBox>
     <RecordColumn :datas="totaldata" customClass="gradient-background" >
     <template slot="center">
      <div class="tge">
@@ -26,49 +26,49 @@
 </template>
 
 <script>
-import HeaderBox from '../components/HeaderBox.vue'
-import RecordColumn from '../components/RecordColumn.vue'
-import TrainList from '../components/TrainList.vue'
-
 import axios from 'axios';
+import HeaderBox from '../components/HeaderBox.vue';
+import RecordColumn from '../components/RecordColumn.vue';
+import TrainList from '../components/TrainList.vue';
+
 export default {
-    name:'HomeList',
+  name: 'HomeList',
   components: { HeaderBox, RecordColumn, TrainList },
 
-data() {
+  data() {
     return {
-        practice:[],
-        totaldata:[]
-        
-    }
-},
+      practice: [],
+      totaldata: [],
+
+    };
+  },
   created() {
-    this.fetchApiData(); 
+    this.fetchApiData();
     this.totaldatas();
   },
   methods: {
     async fetchApiData() {
       try {
-        const response = await axios.get('http://jsonplaceholder.typicode.com/users');
-        this.practice = response.data; 
+        const response = await axios.get('https://run.mocky.io/v3/392da74a-f951-4db2-bfe3-7ddff91b7888');
+        this.practice = response.data.scene;
       } catch (err) {
-        this.error = 'Failed to fetch data'; 
+        this.error = 'Failed to fetch data';
       } finally {
-        this.loading = false; 
+        this.loading = false;
       }
     },
     async totaldatas() {
       try {
-        const response = await axios.get('http://jsonplaceholder.typicode.com/comments?postId=1');
-        this.totaldata = response.data; 
+        const response = await axios.get('https://run.mocky.io/v3/4632d2c9-96f2-4331-93c6-3603938dde60');
+        this.totaldata = response.data;
       } catch (err) {
-        this.error = 'Failed to fetch data'; 
+        this.error = 'Failed to fetch data';
       } finally {
-        this.loading = false; 
+        this.loading = false;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="css" >

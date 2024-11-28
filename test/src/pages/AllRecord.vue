@@ -8,11 +8,10 @@
         <div class="practice-namec-line-clamp2">
             <div class="practice-name__status--text">
                 <span class="practice-name__status">未完成</span>
-                <div class="text">{{item.theme}}</div>
+                <div class="text">{{item.title}}</div>
             </div>
             <div class="meta">
                 <div class="itemtime">
-                  <!--PJ:提一个需求，如果这里只希望展示到日期，不显示小时分种，要怎么实现，想下方向，1小时，找不到合适方向问我-->
                     <div>练习时间:{{ item.times }}</div>
                     <div class="time"></div>
                 </div>
@@ -20,8 +19,7 @@
                     <span>继续练习</span>
                     <i class="el-icon-arrow-righ"></i>
                 </div>
-                
- 
+
             </div>
         </div>
     </div>
@@ -29,27 +27,26 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-export default {
-name:'AllRecord',
-computed:{
-...mapState(['practice'])
+import { mapState } from 'vuex';
 
-},
-methods: {
-  still(item){
-    this.$router.push({
-    path:'/startpracticing',
-      query:{
-        theme:item.theme,
-        names:item.names,
-      }
-  })
-},
-}}
+export default {
+  name: 'AllRecord',
+  computed: {
+    ...mapState(['practice']),
+
+  },
+  methods: {
+    still(item) {
+    this.$store.commit('CHANGE', item);
+      this.$router.push({
+        path: '/startpracticing',
+      });
+    },
+  },
+};
 </script>
 <style lang="css" scoped >
-  
+
 .block-title {
   padding: 5.64102564vw 2.56410256vw 0 5.12820513vw;
   height: 11.79487179vw;

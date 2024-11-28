@@ -1,27 +1,29 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 // 响应组件中的动作
 const actions = {
 
-}
+};
 // 操作数据
 const mutations = {
-    JIA(state, value) {
-        state.practice.unshift(value)
-    }
-}
+  JIA(state, value) {
+    state.practice.unshift(value);
+  },
+  CHANGE(state, value) {
+    state.only = value;
+  }
+};
 // 储存数据
 const state = {
-    practice: []
-}
+  practice: [],
+  only: null,
+};
 
 export default new Vuex.Store({
-    actions,
-    mutations,
-    state
-})
-
-
+  actions,
+  mutations,
+  state,
+});

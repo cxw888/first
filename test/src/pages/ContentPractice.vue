@@ -2,8 +2,8 @@
   <div>
     <div class="top">
         <div class="tag">场景任务</div>
-        <div class="title">{{theme}}</div>
-        <div class="content">{{ content }}</div>
+        <div class="title">{{only.title}}</div>
+        <div class="content">{{ only.desc }}</div>
     </div>
     <div class="two">
         <div class="tag">陪练对象</div>
@@ -11,11 +11,11 @@
             <div class="pc"></div>
             <div class="right">
                 <div class="titles">
-                    <span class="title">{{ names }}</span>
-                    <span class="women">{{gender}}</span>
+                    <span class="title">{{ only.manager }}</span>
+                    <span class="women">{{only.gender}}</span>
                 </div>
                 <div class="content">
-                   {{ personnality }}
+                   {{ only.content }}
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
         <div class="contents">
             <div class="pc2"></div>
             <div class="titles">
-                <span class="title">{{own}}</span>
+                <span class="title">{{only.name}}</span>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
         </div>
       </template>
     </RecordColumn>
-   <div class="bottom" @click="ask(theme,names)"><i class="el-icon-microphone"></i>点击开始练习</div> 
+   <div class="bottom" @click="ask(only)"><i class="el-icon-microphone"></i>点击开始练习</div>
   </div>
 </template>
 
@@ -46,46 +46,56 @@
 /**
  * pj：这里从列表页进到详情页的传参设计不对，一两句讲不清，下次面授课讲
  */
-import { nanoid } from 'nanoid';
-import RecordColumn from '@/components/RecordColumn.vue';
+ import { mapState } from 'vuex';
 import axios from 'axios';
+import RecordColumn from '../components/RecordColumn.vue';
 
 export default {
   components: { RecordColumn },
-    name:'ContentPractice',
-    props:['id','theme','content','names','gender','personnality','own'] ,
-    data() {
-      return {
-        ranking:[]
-      }
-    },
+  name: 'ContentPractice',
+  data() {
+    return {
+      ranking: [],
+      clickedDate: ''
+    };
+  },
   created() {
     this.rankings();
   },
-    methods: {
-      async rankings() {
+  computed: {
+    ...mapState(['only']),
+  },
+  methods: {
+    async rankings() {
       try {
-        const response = await axios.get('http://jsonplaceholder.typicode.com/comments?postId=4');
-        this.ranking = response.data; 
+        const response = await axios.get('https://run.mocky.io/v3/07ea617c-2444-49e0-b764-f5bbc30c1903');
+        this.ranking = response.data;
       } catch (err) {
-        this.error = 'Failed to fetch data'; 
+        this.error = 'Failed to fetch data';
       } finally {
-        this.loading = false; 
+        this.loading = false;
       }
     },
-        ask(theme,names){
-            this.$router.push({
-            path:'/startpracticing',
-            query:{
-            theme:theme,
-            names:names
-             } })
-             const objj={id:nanoid(),names:names,theme:theme,times:'2024-10-13 14:57'}
-             this.$store.commit('JIA',objj)
-        }
+    ask(only) {
+      const today = new Date();
+            const nowday= today.getFullYear() + '-' +
+                                  String(today.getMonth() + 1).padStart(2, '0') + '-' +
+                                  String(today.getDate()).padStart(2, '0');
+                                  this.clickedDate = 'You clicked on: ' + nowday;
+      const objj = {
+        ...only, 
+        times:nowday,
+      };
+      this.$store.commit('JIA', objj);
+      this.$store.commit('CHANGE',only);
+      this.$router.push({
+        path: '/startpracticing',
+      });
+      
     },
-    
-}
+  },
+
+};
 </script>
 <style lang="css" scoped >
 
@@ -99,7 +109,6 @@ export default {
   margin: 2.56410256vw;
   padding: 2.56410256vw;
   backdrop-filter: blur(4px);
-  height: 44.1025641vw;
   border-radius: 3.84615385vw;
 }
 .tag {
@@ -130,7 +139,7 @@ export default {
   margin: 2.56410256vw;
   padding: 2.56410256vw;
   backdrop-filter: blur(4px);
-  height: 37.17948718vw;
+  /* height: 37.17948718vw; */
   border-radius: 3.84615385vw;
 }
 .two .pc {
@@ -144,14 +153,13 @@ export default {
 }
 .two .right {
   width: 71.79487179vw;
-  height: 18.71794872vw;
 }
 .two .right .titles .women {
   font-size: 3.07692308vw;
 }
 .contents {
   width: 86.66666667vw;
-  height: 18.71794872vw;
+  /* height: 14.71794872vw; */
   display: flex;
   justify-content: start;
 }
@@ -178,6 +186,5 @@ export default {
   flex-direction: column;
   justify-content: center;
 }
-
 
 </style>

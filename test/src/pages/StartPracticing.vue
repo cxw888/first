@@ -2,35 +2,48 @@
   <div>
     <div class="header">
         <div class="title">
-            
+
             <div class="tag">
                 任务场景
             </div>
             <template>
-                <div @click="stop"><el-button size="mini" round icon="el-icon-switch-button">结束</el-button></div>
+                <div @click="stop">
+                  <el-button size="mini" round icon="el-icon-switch-button">结束</el-button>
+                </div>
             </template>
         </div>
-        
-        <div class="single-line">{{theme}}</div>
-    </div>
-    
-    <ChatList v-for="(item, index) in messages" :key="index" :item="item" :names="names">
-      <template slot="pcc">
-        <div class="pc"></div>
-         </template>
-    </ChatList>
 
-   <div class="bottom" @click="startRecording"  v-show="began" :disabled="Recording" ><i class="el-icon-microphone"></i>点击开始录音</div> 
-    <div class="nova-btn" @click="hint" v-show="!isRecording"> <div><i class="el-icon-sunny"></i> 话术提示</div></div>
+        <div class="single-line">{{only.title}}</div>
+    </div>
+
+    <ChatList v-for="(item, index) in messages" :key="index" :item="item" :names="only.manager">
+      <template v-slot:pcc>
+        <div class="pc"></div>
+         </template>  
+    </ChatList>
+   <div class="bottom" @click="startRecording"  v-show="began" :disabled="Recording" >
+    <i class="el-icon-microphone"></i>点击开始录音
+  </div>
+    <div class="nova-btn" @click="hint" v-show="!isRecording">
+      <div>
+        <i class="el-icon-sunny"></i> 话术提示
+      </div>
+    </div>
     <div class="tips-dialog" v-show="isRecording">
       <div class="headericon">
-        <div><i class="el-icon-sunny"></i> 话术提示 </div>
-        <div @click="deletetips"> <i class="el-icon-close"></i></div> 
+        <div>
+          <i class="el-icon-sunny"></i> 话术提示
+        </div>
+        <div @click="deletetips">
+          <i class="el-icon-close"></i>
+        </div>
      </div>
         <div class="letter">
             <h3>角度一：资金安全保障</h3>
             <strong>回复示例：</strong>
-            <p>王奶奶，您放心，我们的养老保险产品是由国家认可的保险公司承保的，受到严格的监管。保险公司会定期公布财务报告，您可以了解到公司的经营状况和资金运作情况。保险合同中有明确的保障条款，确保您的权益得到保障。</p>
+            <p>
+              王奶奶，您放心，我们的养老保险产品是由国家认可的保险公司承保的，受到严格的监管。保险公司会定期公布财务报告
+            </p>
         </div>
     </div>
     <div class="recording" v-show="!began">
@@ -47,39 +60,40 @@
 </template>
 
 <script>
-import ChatList from '@/components/ChatList.vue';
+import ChatList from '../components/ChatList.vue';
+import { mapState } from 'vuex';
 
 export default {
   components: { ChatList },
-name:'StartPracticing',
-props:['theme','names'],
-data() {
+  name: 'StartPracticing',
+  data() {
     return {
-        isRecording:false,
-        began:true,
-        Recording:false,
-        mediaRecorder: null,
+      isRecording: false,
+      began: true,
+      Recording: false,
+      mediaRecorder: null,
       audioChunks: [],
       audioUrl: null,
       messages: [],
       startTime: null,
       elapsedTime: 0,
       timerInterval: null,
-    }
-},
-computed:{
-  formattedTime() {
+    };
+  },
+  computed: {
+    ...mapState(['only']),
+    formattedTime() {
       const minutes = Math.floor(this.elapsedTime / 60);
       const seconds = this.elapsedTime % 60;
       return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     },
-},
-methods: {
-    hint(){
-        this.isRecording=true
+  },
+  methods: {
+    hint() {
+      this.isRecording = true;
     },
-    deletetips(){
-        this.isRecording=false
+    deletetips() {
+      this.isRecording = false;
     },
     stopRecording() {
       if (this.mediaRecorder) {
@@ -87,27 +101,27 @@ methods: {
       }
       clearInterval(this.timerInterval);
       this.timerInterval = null;
-      this.elapsedTime = 0; 
+      this.elapsedTime = 0;
 
-      this.began=true
+      this.began = true;
     },
     beforeDestroy() {
       this.stopRecording();
     },
     async startRecording() {
-      this.began=false
- 
+      this.began = false;
+
       this.Recording = true;
-      this.audioChunks = []; 
- 
+      this.audioChunks = [];
+
       navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => {
+        .then((stream) => {
           this.mediaRecorder = new MediaRecorder(stream);
- 
-          this.mediaRecorder.ondataavailable = event => {
+
+          this.mediaRecorder.ondataavailable = (event) => {
             this.audioChunks.push(event.data);
           };
-     //  当停止时
+          //  当停止时
           this.mediaRecorder.onstop = () => {
             const stopTime = new Date().getTime();
             const elapsedSeconds = Math.floor((stopTime - this.startTime) / 1000);
@@ -115,8 +129,7 @@ methods: {
             const audioBlob = new Blob(this.audioChunks, { type: 'audio/webm' });
             this.audioUrl = URL.createObjectURL(audioBlob);
             this.audioChunks = [];
-          this.messages.push({ timestamp:elapsedTimeFormatted,audioUrl:this.audioUrl });
-
+            this.messages.push({ timestamp: elapsedTimeFormatted, audioUrl: this.audioUrl });
           };
           // 开始时间 定义点击开始的时间
           this.startTime = new Date().getTime();
@@ -125,33 +138,33 @@ methods: {
           }, 1000);
           this.mediaRecorder.start();
         })
-       .catch(error => {
-          console.error('错', error);
+        .catch((error) => {
+          console.error('Error starting media recorder:', error);
         });
     },
-    afters(){
-      this.began=true
+    afters() {
+      this.began = true;
     },
-    stop(){
-        this.$confirm('您将结束本次场景任务对话，并前往AI智能分析您的对话效果，看看本次对话的得分如何吧 ', '结束本次任务并前往评估', {
-          confirmButtonText: '前往评估',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
-        }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
+    stop() {
+      this.$confirm('您将结束本次场景任务对话，并前往AI智能分析您的对话效果，看看本次对话的得分如何吧 ', '结束本次任务并前往评估', {
+        confirmButtonText: '前往评估',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true,
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '删除成功!',
         });
-      }
-    }
-}
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除',
+        });
+      });
+    },
+  },
+};
 </script>
 <style lang="css" scoped>
  .recording{
@@ -163,9 +176,9 @@ methods: {
   border: 2px solid #5c67ff;
   border-radius: 3vw;
   display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(247deg, rgba(92, 103, 255, .85098) 15.1%, rgba(226, 112, 255, .85098) 84.9%);
 }
 

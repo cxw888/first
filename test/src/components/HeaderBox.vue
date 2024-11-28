@@ -3,15 +3,15 @@
         <div class="header">
             <div class="pic"></div>
         </div>
-        <div class="names">{{ username }}</div>
+        <div class="names">陈晓雯</div>
     </div>
 </template>
 
 <script>
 export default {
-name:'HeaderBox',
-props:['username']
-}
+  name: 'HeaderBox',
+  props: ['username'],
+};
 </script>
 <style lang="css" scoped>
   .top {

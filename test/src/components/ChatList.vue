@@ -19,14 +19,14 @@
 
 <script>
 export default {
-name:'ChatList',
-props:['item','names']
-}
+  name: 'ChatList',
+  props: ['item', 'names'],
+};
 </script>
 <style lang="css">
-    .chat-list {
-  height: 32.33333333vw;
-  display: flex;
+.chat-list {
+height: 32.33333333vw;
+display: flex;
 justify-content: flex-end;
 gap: 2vw;
 }

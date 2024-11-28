@@ -4,12 +4,10 @@
             <div class="contet">
                 <slot name="center"></slot>
                  <div class="content">
-                  
-                  <div class="item" v-for="item in datas" :key="item.postId">
-                    <div class="number">{{item.id}}</div>
-                        <div class="text">{{item.email }}</div>
+                    <div class="item" v-for="item in datas" :key="item.id">
+                        <div class="number">{{item.grade}}</div>
+                        <div class="text">{{item.title }}</div>
                       </div>
-                   
                 </div>
 
             </div>
@@ -19,13 +17,13 @@
 
 <script>
 export default {
-props:['datas','customClass'],
+  props: ['datas', 'customClass'],
   computed: {
     navigationBarClass() {
       return this.customClass;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style lang="css" >
   .practice-summary {
@@ -37,7 +35,6 @@ props:['datas','customClass'],
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  /* background: linear-gradient(48deg, #e270ff 0%, #5b66ff 44%, #10de8b 92%); */
   border-radius: 2.56410256vw;
   padding: 0.5vw;
 }
@@ -68,10 +65,11 @@ props:['datas','customClass'],
 .practice-summary .navigationbar .contet .content {
   margin: 2.56410256vw;
   display: flex;
-  /* justify-content: space-between; */
+
 }
 .practice-summary .navigationbar .contet .content .item {
-  width: 17.66666667vw;
+  /* width: 17.66666667vw; */
+  flex: 1;
   margin: 0;
   height: 12.82051282vw;
   text-align: center;
@@ -102,7 +100,7 @@ props:['datas','customClass'],
   font-size: 5.12820513vw;
 }
 .practice-summary .navigationbar .contet .content .item .text {
-  font-size: 1.63333333vw;
+  font-size: 3vw;
 }
 
 </style>

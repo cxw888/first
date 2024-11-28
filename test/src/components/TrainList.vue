@@ -2,8 +2,8 @@
   <div class="section" @click="scene(item)">
         <img src="../assets/cover.aa799c19.png" alt="">
         <div class="texts">
-            <h3>{{item.name}}</h3>
-            <p>{{item.email}}</p>
+            <h3>{{item.title}}</h3>
+            <p>{{item.desc}}</p>
         </div>
 
     </div>
@@ -11,25 +11,16 @@
 
 <script>
 export default {
-props:['item'],
-    methods: {
-    scene(item){
-    // 可以往后退
-    this.$router.push({
-    path:'/contentpractice',
-      query:{
-        id:item.id,
-        theme:item.name,
-        content:item.email,
-        names:item.phone,
-        gender:item.website,
-        personnality:item.email,
-        own:item.username
-      }
-})
-}
-}
-}
+  props: ['item'],
+  methods: {
+    scene(item) {
+    this.$store.commit('CHANGE', item);
+      this.$router.push({
+        path: '/contentpractice'
+      });
+    },
+  },
+};
 </script>
 
 <style lang="css" scoped>
